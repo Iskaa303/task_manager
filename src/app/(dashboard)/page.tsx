@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
-import { getCurrent } from "@/features/auth/actions";
+import { getCurrent } from "@/features/auth/queries";
 import { UserButton } from "@/features/auth/components/user-button";
 
 export default async function Home() {
