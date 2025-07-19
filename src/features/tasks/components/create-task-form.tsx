@@ -36,7 +36,12 @@ export const CreateTaskForm = ({ onCancel, userId }: CreateTaskFormProps) => {
     defaultValues: {
       userId,
       name: "",
-      dueDate: new Date(new Date().setDate(new Date().getDate() + 1)),
+      dueDate: (() => {
+        const d = new Date();
+        d.setDate(d.getDate() + 1);
+        d.setHours(0, 0, 0, 0);
+        return d;
+      })(),
       status: TaskStatus.BACKLOG
     },
   });
