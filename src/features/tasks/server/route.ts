@@ -25,7 +25,6 @@ const app = new Hono()
     ),
     async (c) => {
       const databases = c.get("databases");
-      const user = c.get("user");
 
       const {
         status,

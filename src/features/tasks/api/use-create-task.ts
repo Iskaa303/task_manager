@@ -6,7 +6,7 @@ import { client } from "@/lib/rpc";
 type ResponseType = InferResponseType<typeof client.api.tasks["$post"]>;
 type RequestType = InferRequestType<typeof client.api.tasks["$post"]>;
 
-export const useCreateTasks = () => {
+export const useCreateTask = () => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation<

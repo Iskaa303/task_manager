@@ -3,122 +3,163 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 
-import { createTaskSchema } from "../schemas";
-import { Card } from "@/components/ui/card";
-import { TaskStatus } from "../types";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Form,
   FormItem,
   FormLabel,
   FormControl,
   FormMessage,
+  FormField,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { DottedSeparator } from "@/components/dotted-separator";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { DatePicker } from "@/components/date-picker";
+
+import { useCreateTask } from "../api/use-create-task";
+import { TaskStatus } from "../types";
+import { createTaskSchema } from "../schemas";
 
 interface CreateTaskFormProps {
-  onCancel: () => void;
+  onCancel?: () => void;
   userId: string;
 }
 
 type CreateTaskFormData = z.infer<typeof createTaskSchema>;
 
 export const CreateTaskForm = ({ onCancel, userId }: CreateTaskFormProps) => {
+  const { mutate, isPending } = useCreateTask();
 
-  const form = useForm({
+  const form = useForm<z.infer<typeof createTaskSchema>>({
     resolver: zodResolver(createTaskSchema),
     defaultValues: {
-      name: "",
-      status: TaskStatus.BACKLOG,
-      dueDate: new Date(),
       userId,
-      description: "",
+      name: "",
+      dueDate: new Date(new Date().setDate(new Date().getDate() + 1)),
+      status: TaskStatus.BACKLOG
     },
   });
 
-  const onSubmit: SubmitHandler<CreateTaskFormData> = (values) => {
-    const dataWithUserId = { ...values, userId };
-    console.log({ values: dataWithUserId });
+  const onSubmit = (values: z.infer<typeof createTaskSchema>) => {
+    mutate({json: { ...values, userId }}, {
+      onSuccess: ({ data }) => {
+        form.reset();
+      }
+    });
   };
 
   return (
-    <Card>
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col space-y-4 p-4"
-        >
-          <FormItem>
-            <FormLabel htmlFor="name">Task Name</FormLabel>
-            <FormControl>
-              <Input id="name" {...form.register("name")} />
-            </FormControl>
-            <FormMessage>{form.formState.errors.name?.message}</FormMessage>
-          </FormItem>
-
-          <FormItem>
-            <FormLabel htmlFor="status">Status</FormLabel>
-            <FormControl>
-              <Select
-                onValueChange={(value) => form.setValue("status", value as TaskStatus)}
-                value={form.watch("status")}
+    <Card className="w-full h-full border-none shadow-none">
+      <CardHeader className="flex p-7">
+        <CardTitle className="text-xl font-bold">
+          Create a new task
+        </CardTitle>
+      </CardHeader>
+      <div className="px-7">
+        <DottedSeparator />
+      </div>
+      <CardContent className="p-7">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <div className="flex flex-col gap-y-4">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      Task Name
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        placeholder="Enter task name"
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="dueDate"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      Due Date
+                    </FormLabel>
+                    <FormControl>
+                      <DatePicker {...field} />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="status"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      Status
+                    </FormLabel>
+                    <Select
+                      defaultValue={field.value}
+                      onValueChange={field.onChange}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select status" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <FormMessage>
+                        <SelectContent>
+                          <SelectItem value={TaskStatus.BACKLOG}>
+                            Backlog
+                          </SelectItem>
+                          <SelectItem value={TaskStatus.TODO}>
+                            To do
+                          </SelectItem>
+                          <SelectItem value={TaskStatus.IN_PROGRESS}>
+                            In Progress
+                          </SelectItem>
+                          <SelectItem value={TaskStatus.IN_REVIEW}>
+                            In Review
+                          </SelectItem>
+                          <SelectItem value={TaskStatus.DONE}>
+                            Done
+                          </SelectItem>
+                        </SelectContent>
+                      </FormMessage>
+                    </Select>
+                  </FormItem>
+                )}
+              />
+            </div>
+            <DottedSeparator className="py-7" />
+            <div className="flex items-center justify-between">
+              <Button
+                type="button"
+                size="lg"
+                variant="secondary"
+                onClick={onCancel}
+                disabled={isPending}
+                className={cn(!onCancel && "invisible")}
               >
-                <SelectTrigger id="status" className="w-full">
-                  <SelectValue placeholder="Select a status" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="BACKLOG">Backlog</SelectItem>
-                  <SelectItem value="TODO">To Do</SelectItem>
-                  <SelectItem value="IN_PROGRESS">In Progress</SelectItem>
-                  <SelectItem value="IN_REVIEW">In Review</SelectItem>
-                  <SelectItem value="DONE">Done</SelectItem>
-                </SelectContent>
-              </Select>
-            </FormControl>
-            <FormMessage>{form.formState.errors.status?.message}</FormMessage>
-          </FormItem>
-
-          <FormItem>
-            <FormLabel htmlFor="dueDate">Due Date</FormLabel>
-            <FormControl>
-              <Input
-                id="dueDate"
-                type="date"
-                {...form.register("dueDate", { valueAsDate: true })}
-              />
-            </FormControl>
-            <FormMessage>{form.formState.errors.dueDate?.message}</FormMessage>
-          </FormItem>
-
-          <FormItem>
-            <FormLabel htmlFor="description">Description (optional)</FormLabel>
-            <FormControl>
-              <textarea
-                id="description"
-                {...form.register("description")}
-                className="resize-none w-full rounded border border-gray-300 px-3 py-2"
-              />
-            </FormControl>
-            <FormMessage>{form.formState.errors.description?.message}</FormMessage>
-          </FormItem>
-
-          <div className="flex justify-end space-x-2 pt-4">
-            <button
-              type="button"
-              onClick={onCancel}
-              className="px-4 py-2 rounded border border-gray-300 hover:bg-gray-100"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700"
-            >
-              Create Task
-            </button>
-          </div>
-        </form>
-      </Form>
+                Cancel
+              </Button>
+              <Button
+                disabled={isPending}
+                type="submit"
+                size="lg"
+              >
+                Create Task
+              </Button>
+            </div>
+          </form>
+        </Form>
+      </CardContent>
     </Card>
   );
 };
