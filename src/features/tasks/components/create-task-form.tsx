@@ -28,8 +28,6 @@ interface CreateTaskFormProps {
   userId: string;
 }
 
-type CreateTaskFormData = z.infer<typeof createTaskSchema>;
-
 export const CreateTaskForm = ({ onCancel, userId }: CreateTaskFormProps) => {
   const { mutate, isPending } = useCreateTask();
 
@@ -47,6 +45,7 @@ export const CreateTaskForm = ({ onCancel, userId }: CreateTaskFormProps) => {
     mutate({json: { ...values, userId }}, {
       onSuccess: ({ data }) => {
         form.reset();
+        onCancel?.();
       }
     });
   };
@@ -109,7 +108,7 @@ export const CreateTaskForm = ({ onCancel, userId }: CreateTaskFormProps) => {
                       onValueChange={field.onChange}
                     >
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger className="w-full">
                           <SelectValue placeholder="Select status" />
                         </SelectTrigger>
                       </FormControl>

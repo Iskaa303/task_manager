@@ -2,13 +2,16 @@ import { Loader } from "lucide-react";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { CreateTaskForm } from "./create-task-form";
+import { useUserId } from "@/features/auth/api/use-user-id";
 
 interface CreateTaskFormWrapperProps {
   onCancel: () => void;
 };
 
 export const CreateTaskFormWrapper = ({ onCancel }: CreateTaskFormWrapperProps) => {
-  const isLoading = false;
+  const { userId, isLoading: isLoadingUser } = useUserId();
+
+  const isLoading = isLoadingUser;
 
   if (isLoading) {
     return (
@@ -23,7 +26,7 @@ export const CreateTaskFormWrapper = ({ onCancel }: CreateTaskFormWrapperProps) 
   return (
     <CreateTaskForm
       onCancel={onCancel}
-      userId=""
+      userId={userId}
     />
   )
 }
