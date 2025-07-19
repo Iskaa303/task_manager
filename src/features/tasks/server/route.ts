@@ -20,6 +20,7 @@ const app = new Hono()
         status: z.enum(TaskStatus).nullish(),
         search: z.string().nullish(),
         dueDate: z.string().nullish(),
+        userId: z.string().nullish(),
       })
     ),
     async (c) => {
@@ -30,6 +31,7 @@ const app = new Hono()
         status,
         search,
         dueDate,
+        userId
       } = c.req.valid("query");
 
       const query = [
@@ -49,6 +51,11 @@ const app = new Hono()
       if (search) {
         console.log("search", search);
         query.push(Query.search("name", search));
+      }
+
+      if (userId) {
+        console.log("userId", userId);
+        query.push(Query.equal("userId", userId));
       }
 
       const tasks = await databases.listDocuments(
@@ -78,11 +85,17 @@ const app = new Hono()
     async (c) => {
       const user = c.get("user");
       const databases = c.get("databases");
-      const {
+      let {
         name,
         status,
         dueDate
       } = c.req.valid("json");
+
+      if (!dueDate) {
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        dueDate = tomorrow;
+      }
 
       const highestPositionTask = await databases.listDocuments(
         DATABASE_ID,
@@ -108,6 +121,7 @@ const app = new Hono()
           status,
           dueDate,
           position: newPosition,
+          userId: user.$id,
         }
       );
 

@@ -7,4 +7,5 @@ export const createTaskSchema = z.object({
   status: z.enum(TaskStatus, "Task status is required" ),
   dueDate: z.coerce.date(),
   description: z.string().optional(),
+  userId: z.string(),
 });
