@@ -5,18 +5,15 @@ import { TaskStatus } from "../types";
 import { useTaskFilters } from "../hooks/use-task-filters";
 import { DatePicker } from "@/components/date-picker";
 
-interface DataFiltersProps {
-  
-};
+// Removed empty interface DataFiltersProps as it is not used and empty
 
-export const DataFilters = ({}: DataFiltersProps) => {
-  const { userId, isLoading: isLoadingUser } = useUserId();
+export const DataFilters = () => {
+  const { isLoading: isLoadingUser } = useUserId();
 
   const isLoading = isLoadingUser;
 
   const [{
     status,
-    search,
     dueDate
   }, setFilters] = useTaskFilters();
 

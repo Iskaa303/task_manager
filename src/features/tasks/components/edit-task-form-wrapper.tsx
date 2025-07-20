@@ -41,7 +41,7 @@ export const EditTaskFormWrapper = ({
     <EditTaskForm
       onCancel={onCancel}
       initialValues={initialValues}
-      userId={userId}
+      userId={userId!}
     />
   )
 }

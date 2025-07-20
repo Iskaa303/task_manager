@@ -5,7 +5,6 @@ import { z } from "zod";
 
 import { sessionMiddleware } from "@/lib/session-middleware";
 import { DATABASE_ID, TASKS_ID } from "@/config";
-import { createAdminClient } from "@/lib/appwrite";
 
 import { createTaskSchema } from "../schemas";
 import { Task, TaskStatus } from "../types";
@@ -113,7 +112,7 @@ const app = new Hono()
     async (c) => {
       const user = c.get("user");
       const databases = c.get("databases");
-      let {
+      const {
         name,
         status,
         dueDate,
@@ -155,11 +154,11 @@ const app = new Hono()
     async (c) => {
       const user = c.get("user");
       const databases = c.get("databases");
-      let {
+      const {
         name,
         status,
-        dueDate
       } = c.req.valid("json");
+      let { dueDate } = c.req.valid("json");
 
       if (!dueDate) {
         const tomorrow = new Date();
@@ -204,7 +203,6 @@ const app = new Hono()
     async (c) => {
       const currentUser = c.get("user");
       const databases = c.get("databases");
-      const { users } = await createAdminClient();
       const { taskId } = c.req.param();
 
       const task = await databases.getDocument<Task>(
@@ -219,8 +217,6 @@ const app = new Hono()
           401
         );
       }
-
-      const user = await users.get(task.userId);
 
       return c.json({
         data: {

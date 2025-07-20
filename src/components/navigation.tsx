@@ -1,4 +1,3 @@
-import { SettingsIcon } from "lucide-react";
 import Link from "next/link";
 import { GoHome, GoHomeFill } from "react-icons/go";
 

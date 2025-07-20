@@ -1,15 +1,14 @@
+"use client";
+
 import { Loader } from "lucide-react";
 
 import { Card, CardContent } from "@/components/ui/card";
-import { CreateTaskForm } from "./create-task-form";
 import { useUserId } from "@/features/auth/api/use-user-id";
 
-interface CreateTaskFormWrapperProps {
-  onCancel: () => void;
-};
+import { TaskViewSwitcher } from "./task-view-switcher";
 
-export const CreateTaskFormWrapper = ({ onCancel }: CreateTaskFormWrapperProps) => {
-  const { userId, isLoading: isLoadingUser } = useUserId();
+export const TaskViewSwitcherWrapper = () => {
+  const { isLoading: isLoadingUser } = useUserId();
 
   const isLoading = isLoadingUser;
 
@@ -24,9 +23,6 @@ export const CreateTaskFormWrapper = ({ onCancel }: CreateTaskFormWrapperProps) 
   }
 
   return (
-    <CreateTaskForm
-      onCancel={onCancel}
-      userId={userId!}
-    />
+    <TaskViewSwitcher />
   )
 }

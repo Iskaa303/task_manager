@@ -1,6 +1,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -31,7 +31,7 @@ interface CreateTaskFormProps {
 export const CreateTaskForm = ({ onCancel, userId }: CreateTaskFormProps) => {
   const { mutate, isPending } = useCreateTask();
 
-  const form = useForm<z.infer<typeof createTaskSchema>>({
+  const form = useForm<z.input<typeof createTaskSchema>>({
     resolver: zodResolver(createTaskSchema),
     defaultValues: {
       userId,
@@ -46,9 +46,9 @@ export const CreateTaskForm = ({ onCancel, userId }: CreateTaskFormProps) => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof createTaskSchema>) => {
+  const onSubmit = (values: z.input<typeof createTaskSchema>) => {
     mutate({json: { ...values, userId }}, {
-      onSuccess: ({ data }) => {
+      onSuccess: () => {
         form.reset();
         onCancel?.();
       }
@@ -89,16 +89,19 @@ export const CreateTaskForm = ({ onCancel, userId }: CreateTaskFormProps) => {
               <FormField
                 control={form.control}
                 name="dueDate"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Due Date
-                    </FormLabel>
-                    <FormControl>
-                      <DatePicker {...field} />
-                    </FormControl>
-                  </FormItem>
-                )}
+                render={({ field }) => {
+                  const value = field.value instanceof Date ? field.value : undefined;
+                  return (
+                    <FormItem>
+                      <FormLabel>
+                        Due Date
+                      </FormLabel>
+                      <FormControl>
+                        <DatePicker {...field} value={value} />
+                      </FormControl>
+                    </FormItem>
+                  );
+                }}
               />
               <FormField
                 control={form.control}

@@ -1,6 +1,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -29,10 +29,10 @@ interface EditTaskFormProps {
   initialValues: Task;
 }
 
-export const EditTaskForm = ({ onCancel, userId, initialValues }: EditTaskFormProps) => {
+export const EditTaskForm = ({ onCancel, initialValues }: EditTaskFormProps) => {
   const { mutate, isPending } = useUpdateTask();
 
-  const form = useForm<z.infer<typeof createTaskSchema>>({
+  const form = useForm<z.input<typeof createTaskSchema>>({
     resolver: zodResolver(createTaskSchema.omit({ description: true, })),
     defaultValues: {
       ...initialValues,
@@ -40,9 +40,9 @@ export const EditTaskForm = ({ onCancel, userId, initialValues }: EditTaskFormPr
     },
   });
 
-  const onSubmit = (values: z.infer<typeof createTaskSchema>) => {
+  const onSubmit = (values: z.input<typeof createTaskSchema>) => {
     mutate({json: values, param: { taskId: initialValues.$id }}, {
-      onSuccess: ({ data }) => {
+      onSuccess: () => {
         form.reset();
         onCancel?.();
       }
@@ -83,16 +83,19 @@ export const EditTaskForm = ({ onCancel, userId, initialValues }: EditTaskFormPr
               <FormField
                 control={form.control}
                 name="dueDate"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Due Date
-                    </FormLabel>
-                    <FormControl>
-                      <DatePicker {...field} />
-                    </FormControl>
-                  </FormItem>
-                )}
+                render={({ field }) => {
+                  const value = field.value instanceof Date ? field.value : undefined;
+                  return (
+                    <FormItem>
+                      <FormLabel>
+                        Due Date
+                      </FormLabel>
+                      <FormControl>
+                        <DatePicker {...field} value={value} />
+                      </FormControl>
+                    </FormItem>
+                  );
+                }}
               />
               <FormField
                 control={form.control}

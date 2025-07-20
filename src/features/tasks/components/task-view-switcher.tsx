@@ -18,7 +18,6 @@ import { columns } from "./columns";
 export const TaskViewSwitcher = () => {
   const [{
     status,
-    search,
     dueDate
   }] = useTaskFilters();
 
@@ -30,7 +29,7 @@ export const TaskViewSwitcher = () => {
   const { open } = useCreateTaskModal();
 
   const { data: tasks, isLoading: isLoadingTasks } = useGetTasks({
-    userId,
+    userId: userId ?? "",
     status,
     dueDate,
   });
