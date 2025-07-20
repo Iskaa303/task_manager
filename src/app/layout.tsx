@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Toaster } from "sonner";
 import { Geist, Geist_Mono } from "next/font/google";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 
@@ -33,6 +34,7 @@ export default function RootLayout({
         className={cn(geistMono.className, geistSans.className, "antialiased min-h-screen")}
       >
         <NuqsAdapter>
+          <Toaster richColors />
           <QueryProvider>
             {children}
           </QueryProvider>
