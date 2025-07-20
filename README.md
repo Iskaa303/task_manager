@@ -1,36 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Task Manager
+
+## Tech Stack
+
+This project is built using the following technologies:
+
+- **Next.js** (v15.4.1) with Turbopack for fast development and production builds
+- **React** (v19.1.0) and **React DOM** (v19.1.0) for building the user interface
+- **TypeScript** (v5) for static typing
+- **Tailwind CSS** (v4) with PostCSS for styling
+- **ESLint** for code linting and quality
+- **React Query** for data fetching and state management
+- **React Table** for building tables
+- **Radix UI** components for accessible UI primitives
+- **React Hook Form** for form management
+- **Zod** for schema validation
+- **Hono** for server-side routing and API handling
+- **Appwrite** SDK for backend services integration
+- Various utility libraries including:
+  - `date-fns` for date manipulation
+  - `clsx` for conditional classNames
+  - `lucide-react` and `react-icons` for icons
+  - `sonner` for notifications
+  - `tailwind-merge` for merging Tailwind classes
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js (recommended version 18 or higher)
+- npm or yarn package manager
+
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/Iskaa303/task_manager.git
+   cd task_manager
+   ```
+
+2. Install dependencies:
+
+   Using bun:
+
+   ```bash
+   bun install
+   ```
+
+### Running the Development Server
+
+Start the development server with Turbopack:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+bun run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open your browser and navigate to `http://localhost:3000` to see the app running.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Building for Production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+To build the project for production:
 
-## Learn More
+```bash
+bun run build
+```
 
-To learn more about Next.js, take a look at the following resources:
+### Starting the Production Server
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+After building, start the production server:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+bun run start
+```
 
-## Deploy on Vercel
+### Linting
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+To run ESLint and check for code issues:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+bun run lint
+```
+
+## Additional Notes
+
+- This project uses Appwrite for backend services, ensure you have the Appwrite server configured and running if you want to use backend features.
+- Tailwind CSS is configured with PostCSS; you can customize styles in the `globals.css` file.
+- The project uses React Query for efficient data fetching and caching.
