@@ -15,6 +15,7 @@ import { useTaskFilters } from "../hooks/use-task-filters";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
 import { DataKanban } from "./data-kanban";
+import { TaskStatus } from "../types";
 
 export const TaskViewSwitcher = () => {
   const [{
@@ -27,7 +28,7 @@ export const TaskViewSwitcher = () => {
   });
 
   const { userId } = useUserId();
-  const { open } = useCreateTaskModal();
+  const { setStatus } = useCreateTaskModal();
 
   const { data: tasks, isLoading: isLoadingTasks } = useGetTasks({
     userId: userId ?? "",
@@ -54,7 +55,7 @@ export const TaskViewSwitcher = () => {
               Calendar
             </TabsTrigger>
           </TabsList>
-          <Button size="sm" className="w-full lg:w-auto" onClick={open}>
+          <Button size="sm" className="w-full lg:w-auto" onClick={() => setStatus(TaskStatus.BACKLOG)}>
             <PlusIcon className="size-4 mr-2" />
             New
           </Button>

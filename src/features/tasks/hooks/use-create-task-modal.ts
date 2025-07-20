@@ -1,18 +1,23 @@
-import { useQueryState, parseAsBoolean } from "nuqs";
+import { useQueryState, parseAsString } from "nuqs";
+
+import { TaskStatus } from "../types";
 
 export const useCreateTaskModal = () => {
-  const [ isOpen, setIsOpen ] = useQueryState(
+  const [ status, setStatus ] = useQueryState(
     "create-task",
-    parseAsBoolean.withDefault(false).withOptions({ clearOnDefault: true })
+    parseAsString.withOptions({ clearOnDefault: true })
   );
 
-  const open = () => setIsOpen(true);
-  const close = () => setIsOpen(false);
+  const isOpen = status !== null && status !== undefined;
+
+  const open = (initialStatus: TaskStatus) => setStatus(initialStatus);
+  const close = () => setStatus(null);
 
   return {
     isOpen,
+    status: status ?? TaskStatus.BACKLOG,
     open,
     close,
-    setIsOpen,
+    setStatus,
   };
 };

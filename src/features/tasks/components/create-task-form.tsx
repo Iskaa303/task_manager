@@ -21,6 +21,7 @@ import { DatePicker } from "@/components/date-picker";
 import { useCreateTask } from "../api/use-create-task";
 import { TaskStatus } from "../types";
 import { createTaskSchema } from "../schemas";
+import { useCreateTaskModal } from "../hooks/use-create-task-modal";
 
 interface CreateTaskFormProps {
   onCancel?: () => void;
@@ -30,6 +31,7 @@ interface CreateTaskFormProps {
 
 export const CreateTaskForm = ({ onCancel, userId, status }: CreateTaskFormProps) => {
   const { mutate, isPending } = useCreateTask();
+  const { setStatus } = useCreateTaskModal();
 
   const form = useForm<z.input<typeof createTaskSchema>>({
     resolver: zodResolver(createTaskSchema),
@@ -113,7 +115,10 @@ export const CreateTaskForm = ({ onCancel, userId, status }: CreateTaskFormProps
                     </FormLabel>
                     <Select
                       defaultValue={field.value}
-                      onValueChange={field.onChange}
+                      onValueChange={(value) => {
+                        field.onChange(value);
+                        setStatus(value);
+                      }}
                     >
                       <FormControl>
                         <SelectTrigger className="w-full">
