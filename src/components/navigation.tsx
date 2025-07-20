@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { GoCheckCircle, GoCheckCircleFill, GoHome, GoHomeFill } from "react-icons/go";
 
 import { cn } from "@/lib/utils";
@@ -19,19 +22,25 @@ const routes = [
 ];
 
 export const Navigation = () => {
+  const pathname = usePathname();
+
   return (
     <ul className="flex flex-col">
       {routes.map((item) => {
-        const isActive = false;
+        const isActive = pathname === item.href;
         const Icon = isActive ? item.activeIcon : item.icon;
-        
+
         return (
           <Link key={item.href} href={item.href}>
-            <div className={cn(
-              "flex items-center gap-2.5 p-2.5 rounded-md font-medium hover:text-primary transition text-neutral-500",
-              isActive && "bg-white shadow-sm hover:opacity-100 text-primary"
-            )}>
-              <Icon className="size-5 text-neutral-500" />
+            <div
+              className={cn(
+                "flex items-center gap-2.5 p-2.5 rounded-md font-medium hover:text-primary transition",
+                isActive
+                  ? "bg-white shadow-sm text-primary"
+                  : "text-neutral-500 hover:text-primary"
+              )}
+            >
+              <Icon className={cn("size-5", isActive ? "text-primary" : "text-neutral-500")} />
               {item.label}
             </div>
           </Link>

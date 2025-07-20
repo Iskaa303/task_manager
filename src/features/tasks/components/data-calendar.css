@@ -1,5 +1,12 @@
+@property --tw-border-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+
 .rbc-header {
-  @apply border-b-0;
+  border-bottom-style: var(--tw-border-style);
+  border-bottom-width: 0px;
   color: var(--muted-foreground);
   padding-bottom: calc(var(--spacing) * 4) /* 1rem = 16px */;
   --tw-font-weight: var(--font-weight-normal) /* 400 */;
@@ -9,7 +16,8 @@
 }
 
 .rbc-header + .rbc-header {
-  @apply border-l-0;
+  border-left-style: var(--tw-border-style);
+  border-left-width: 0px;
 }
 
 .rbc-button-link {
@@ -21,13 +29,16 @@
 }
 
 .rbc-month-row {
-  @apply min-h-[180px];
-  @apply border-t;
-  @apply border-x;
+  min-height: 180px;
+  border-top-style: var(--tw-border-style);
+  border-top-width: 1px;
+  border-inline-style: var(--tw-border-style);
+  border-inline-width: 1px;
 }
 
 .rbc-month-row:last-of-type {
-  @apply border-b;
+  border-bottom-style: var(--tw-border-style);
+  border-bottom-width: 1px;
   border-bottom-right-radius: calc(var(--radius) /* 0.25rem = 4px */ - 2px);
   border-bottom-left-radius: calc(var(--radius) /* 0.25rem = 4px */ - 2px);
 }
@@ -38,7 +49,8 @@
 }
 
 .rbc-month-view {
-  @apply border-none;
+  --tw-border-style: none;
+  border-style: none;
 }
 
 .rbc-date-cell {
