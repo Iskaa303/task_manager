@@ -1,4 +1,3 @@
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -26,9 +25,10 @@ import { createTaskSchema } from "../schemas";
 interface CreateTaskFormProps {
   onCancel?: () => void;
   userId: string;
+  status?: TaskStatus;
 }
 
-export const CreateTaskForm = ({ onCancel, userId }: CreateTaskFormProps) => {
+export const CreateTaskForm = ({ onCancel, userId, status }: CreateTaskFormProps) => {
   const { mutate, isPending } = useCreateTask();
 
   const form = useForm<z.input<typeof createTaskSchema>>({
@@ -42,7 +42,7 @@ export const CreateTaskForm = ({ onCancel, userId }: CreateTaskFormProps) => {
         d.setHours(0, 0, 0, 0);
         return d;
       })(),
-      status: TaskStatus.BACKLOG
+      status: status ?? TaskStatus.BACKLOG
     },
   });
 
