@@ -83,7 +83,6 @@ const app = new Hono()
       }
 
       if (userId) {
-        console.log("userId", userId);
         query.push(Query.equal("userId", userId));
       }
 
