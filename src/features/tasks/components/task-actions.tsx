@@ -5,7 +5,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { useConfirm } from "@/hooks/use-confirm";
 
 import { useDeleteTask } from "../api/use-delete-task";
-import { useEditTaskModal } from "../hooks/use-create-edit-modal";
+import { useEditTaskModal } from "../hooks/use-edit-task-modal";
 
 interface TaskActionsProps {
   id: string;
@@ -21,7 +21,7 @@ export const TaskActions = ({
   const { open } = useEditTaskModal();
 
   const [ ConfirmDialog, confirm ] = useConfirm(
-    "Delete task",
+    "Delete task?",
     "This action cannot be undone.",
     { variant: "destructive" }
   );

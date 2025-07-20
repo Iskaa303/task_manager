@@ -1,14 +1,20 @@
 import Link from "next/link";
-import { GoHome, GoHomeFill } from "react-icons/go";
+import { GoCheckCircle, GoCheckCircleFill, GoHome, GoHomeFill } from "react-icons/go";
 
 import { cn } from "@/lib/utils";
 
 const routes = [
   {
     label: "Home",
-    href: "",
+    href: "/",
     icon: GoHome,
     activeIcon: GoHomeFill,
+  },
+  {
+    label: "My Tasks",
+    href: "/tasks",
+    icon: GoCheckCircle,
+    activeIcon: GoCheckCircleFill,
   },
 ];
 
