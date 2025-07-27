@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Toaster } from "sonner";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist_Mono, Roboto } from "next/font/google";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 import { cn } from "@/lib/utils";
@@ -8,8 +8,8 @@ import { QueryProvider } from "@/components/query-provider";
 
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const googleSans = Roboto({
+  variable: "--font-google-sans",
   subsets: ["latin"],
 });
 
@@ -31,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={cn(geistMono.className, geistSans.className, "antialiased min-h-screen")}
+        className={cn(geistMono.className, googleSans.className, "antialiased min-h-screen")}
       >
         <NuqsAdapter>
           <Toaster richColors />
