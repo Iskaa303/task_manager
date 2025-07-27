@@ -110,25 +110,25 @@ export const EditTaskForm = ({ onCancel, initialValues }: EditTaskFormProps) => 
                       onValueChange={field.onChange}
                     >
                       <FormControl>
-                        <SelectTrigger className="w-full">
+                        <SelectTrigger className="w-full cursor-pointer hover:bg-accent hover:text-accent-foreground transition-colors duration-200 ease-in-out">
                           <SelectValue placeholder="Select status" />
                         </SelectTrigger>
                       </FormControl>
                       <FormMessage>
                         <SelectContent>
-                          <SelectItem value={TaskStatus.BACKLOG}>
+                          <SelectItem value={TaskStatus.BACKLOG} className="cursor-pointer hover:bg-accent hover:text-accent-foreground transition-colors duration-200 ease-in-out">
                             Backlog
                           </SelectItem>
-                          <SelectItem value={TaskStatus.TODO}>
+                          <SelectItem value={TaskStatus.TODO} className="cursor-pointer hover:bg-accent hover:text-accent-foreground transition-colors duration-200 ease-in-out">
                             To do
                           </SelectItem>
-                          <SelectItem value={TaskStatus.IN_PROGRESS}>
+                          <SelectItem value={TaskStatus.IN_PROGRESS} className="cursor-pointer hover:bg-accent hover:text-accent-foreground transition-colors duration-200 ease-in-out">
                             In Progress
                           </SelectItem>
-                          <SelectItem value={TaskStatus.IN_REVIEW}>
+                          <SelectItem value={TaskStatus.IN_REVIEW} className="cursor-pointer hover:bg-accent hover:text-accent-foreground transition-colors duration-200 ease-in-out">
                             In Review
                           </SelectItem>
-                          <SelectItem value={TaskStatus.DONE}>
+                          <SelectItem value={TaskStatus.DONE} className="cursor-pointer hover:bg-accent hover:text-accent-foreground transition-colors duration-200 ease-in-out">
                             Done
                           </SelectItem>
                         </SelectContent>

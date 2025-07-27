@@ -34,8 +34,8 @@ export const UserButton = () => {
 
   return (
     <DropdownMenu modal={false}>
-      <DropdownMenuTrigger className="outline-none relative">
-        <Avatar className="size-10 hover:opacity-75 transition border border-neutral-300">
+<DropdownMenuTrigger className="outline-none relative cursor-pointer">
+  <Avatar className="size-10 hover:opacity-90 hover:scale-105 hover:shadow-md transition transform border border-neutral-300">
           <AvatarFallback className="bg-neutral-200 font-medium text-neutral-500 flex items-center justify-center">
             {avatarFallback}
           </AvatarFallback>

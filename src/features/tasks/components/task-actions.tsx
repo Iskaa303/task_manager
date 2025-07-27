@@ -48,14 +48,14 @@ export const TaskActions = ({
         <DropdownMenuContent align="end" className="w-48">
           <DropdownMenuItem
             onClick={onOpenTask}
-            className="font-medium p-[10px]"
+            className="font-medium p-[10px] cursor-pointer"
           >
             <ExternalLinkIcon className="size-4 mr-2 stroke-2" />
             Task Details
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => open(id)}
-            className="font-medium p-[10px]"
+            className="font-medium p-[10px] cursor-pointer"
           >
             <PencilIcon className="size-4 mr-2 stroke-2" />
             Edit Task
@@ -63,7 +63,7 @@ export const TaskActions = ({
           <DropdownMenuItem
             onClick={onDelete}
             disabled={isPending}
-            className="text-amber-700 focus:text-amber-700 font-medium p-[10px]"
+            className="text-amber-700 focus:text-amber-700 font-medium p-[10px] cursor-pointer hover:bg-accent hover:text-accent-foreground transition-colors duration-200 ease-in-out"
           >
             <TrashIcon className="size-4 mr-2 stroke-2" />
             Delete Task

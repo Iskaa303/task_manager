@@ -58,13 +58,13 @@ export const TaskViewSwitcher = () => {
       <div className="h-full flex flex-col overflow-auto p-4">
         <div className="flex flex-col gap-y-2 lg:flex-row justify-between items-center">
           <TabsList className="w-full lg:w-auto">
-            <TabsTrigger className="h-8 w-full lg:w-auto cursor-pointer" value="table">
+            <TabsTrigger className="h-8 w-full lg:w-auto cursor-pointer hover:bg-accent hover:text-accent-foreground transition-colors duration-200 ease-in-out" value="table">
               Table
             </TabsTrigger>
-            <TabsTrigger className="h-8 w-full lg:w-auto cursor-pointer" value="kanban">
+            <TabsTrigger className="h-8 w-full lg:w-auto cursor-pointer hover:bg-accent hover:text-accent-foreground transition-colors duration-200 ease-in-out" value="kanban">
               Kanban
             </TabsTrigger>
-            <TabsTrigger className="h-8 w-full lg:w-auto cursor-pointer" value="calendar">
+            <TabsTrigger className="h-8 w-full lg:w-auto cursor-pointer hover:bg-accent hover:text-accent-foreground transition-colors duration-200 ease-in-out" value="calendar">
               Calendar
             </TabsTrigger>
           </TabsList>

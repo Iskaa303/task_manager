@@ -118,6 +118,18 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: 'Poppins', 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  a {
+    @apply text-primary underline-offset-4 transition-colors duration-300 ease-in-out;
+  }
+  a:hover {
+    @apply text-primary/80;
+  }
+  button {
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+    border-radius: var(--radius-lg);
   }
 }
 

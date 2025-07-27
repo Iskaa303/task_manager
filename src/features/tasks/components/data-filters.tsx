@@ -29,7 +29,7 @@ export const DataFilters = () => {
         defaultValue={status ?? undefined}
         onValueChange={(value) => onStatusChange(value)}
       >
-          <SelectTrigger className="w-full lg:w-auto h-8 cursor-pointer">
+          <SelectTrigger className="w-full lg:w-auto h-8 cursor-pointer hover:bg-accent hover:text-accent-foreground transition-colors duration-200 ease-in-out">
             <div className="flex items-center pr-2">
               <ListChecksIcon className="size-4 mr-2" />
               <SelectValue placeholder="All statuses" />
